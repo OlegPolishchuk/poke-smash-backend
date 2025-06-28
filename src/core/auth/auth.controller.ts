@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Session } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Res, Session } from '@nestjs/common';
 import { Response } from 'express';
 
 import { AuthService } from '@/src/core/auth/auth.service';
@@ -48,5 +48,20 @@ export class AuthController {
     console.log(`Created new user with ID: ${newUser.id}`);
 
     return newUser;
+  }
+
+  @Post('/logout')
+  @HttpCode(204)
+  async logout(@Session() session: AppSession, @Res() response: Response) {
+    const user = await this.createNewUser(session);
+
+    session.user_id = `${user.id}`;
+
+    response.cookie('poke_sid', user.id, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
+    });
+
+    response.status(204).send();
   }
 }

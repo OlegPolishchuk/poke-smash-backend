@@ -133,14 +133,15 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.SwipesScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  pokemin_id: 'pokemin_id',
+  pokemon_id: 'pokemon_id',
+  type: 'type',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
 
 exports.Prisma.PokemonStatsScalarFieldEnum = {
   id: 'id',
-  pokemom_id: 'pokemom_id',
+  pokemon_id: 'pokemon_id',
   likes: 'likes',
   disliked: 'disliked',
   created_at: 'created_at',
@@ -161,7 +162,10 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.SwipeType = exports.$Enums.SwipeType = {
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',

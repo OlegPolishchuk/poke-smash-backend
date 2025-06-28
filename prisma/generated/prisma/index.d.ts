@@ -30,6 +30,23 @@ export type Swipes = $Result.DefaultSelection<Prisma.$SwipesPayload>
 export type PokemonStats = $Result.DefaultSelection<Prisma.$PokemonStatsPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const SwipeType: {
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+};
+
+export type SwipeType = (typeof SwipeType)[keyof typeof SwipeType]
+
+}
+
+export type SwipeType = $Enums.SwipeType
+
+export const SwipeType: typeof $Enums.SwipeType
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -1228,7 +1245,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    username: string
+    username: string | null
     email: string | null
     avatar: string | null
     password: string
@@ -1310,7 +1327,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      username: string
+      username: string | null
       email: string | null
       avatar: string | null
       password: string
@@ -2190,17 +2207,18 @@ export namespace Prisma {
   }
 
   export type SwipesAvgAggregateOutputType = {
-    pokemin_id: number | null
+    pokemon_id: number | null
   }
 
   export type SwipesSumAggregateOutputType = {
-    pokemin_id: number | null
+    pokemon_id: number | null
   }
 
   export type SwipesMinAggregateOutputType = {
     id: string | null
     user_id: string | null
-    pokemin_id: number | null
+    pokemon_id: number | null
+    type: $Enums.SwipeType | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -2208,7 +2226,8 @@ export namespace Prisma {
   export type SwipesMaxAggregateOutputType = {
     id: string | null
     user_id: string | null
-    pokemin_id: number | null
+    pokemon_id: number | null
+    type: $Enums.SwipeType | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -2216,7 +2235,8 @@ export namespace Prisma {
   export type SwipesCountAggregateOutputType = {
     id: number
     user_id: number
-    pokemin_id: number
+    pokemon_id: number
+    type: number
     created_at: number
     updated_at: number
     _all: number
@@ -2224,17 +2244,18 @@ export namespace Prisma {
 
 
   export type SwipesAvgAggregateInputType = {
-    pokemin_id?: true
+    pokemon_id?: true
   }
 
   export type SwipesSumAggregateInputType = {
-    pokemin_id?: true
+    pokemon_id?: true
   }
 
   export type SwipesMinAggregateInputType = {
     id?: true
     user_id?: true
-    pokemin_id?: true
+    pokemon_id?: true
+    type?: true
     created_at?: true
     updated_at?: true
   }
@@ -2242,7 +2263,8 @@ export namespace Prisma {
   export type SwipesMaxAggregateInputType = {
     id?: true
     user_id?: true
-    pokemin_id?: true
+    pokemon_id?: true
+    type?: true
     created_at?: true
     updated_at?: true
   }
@@ -2250,7 +2272,8 @@ export namespace Prisma {
   export type SwipesCountAggregateInputType = {
     id?: true
     user_id?: true
-    pokemin_id?: true
+    pokemon_id?: true
+    type?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -2345,7 +2368,8 @@ export namespace Prisma {
   export type SwipesGroupByOutputType = {
     id: string
     user_id: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at: Date
     updated_at: Date
     _count: SwipesCountAggregateOutputType | null
@@ -2372,7 +2396,8 @@ export namespace Prisma {
   export type SwipesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    pokemin_id?: boolean
+    pokemon_id?: boolean
+    type?: boolean
     created_at?: boolean
     updated_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2381,7 +2406,8 @@ export namespace Prisma {
   export type SwipesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    pokemin_id?: boolean
+    pokemon_id?: boolean
+    type?: boolean
     created_at?: boolean
     updated_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2390,7 +2416,8 @@ export namespace Prisma {
   export type SwipesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    pokemin_id?: boolean
+    pokemon_id?: boolean
+    type?: boolean
     created_at?: boolean
     updated_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2399,12 +2426,13 @@ export namespace Prisma {
   export type SwipesSelectScalar = {
     id?: boolean
     user_id?: boolean
-    pokemin_id?: boolean
+    pokemon_id?: boolean
+    type?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type SwipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "pokemin_id" | "created_at" | "updated_at", ExtArgs["result"]["swipes"]>
+  export type SwipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "pokemon_id" | "type" | "created_at" | "updated_at", ExtArgs["result"]["swipes"]>
   export type SwipesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2423,7 +2451,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       user_id: string
-      pokemin_id: number
+      pokemon_id: number
+      type: $Enums.SwipeType
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["swipes"]>
@@ -2852,7 +2881,8 @@ export namespace Prisma {
   interface SwipesFieldRefs {
     readonly id: FieldRef<"Swipes", 'String'>
     readonly user_id: FieldRef<"Swipes", 'String'>
-    readonly pokemin_id: FieldRef<"Swipes", 'Int'>
+    readonly pokemon_id: FieldRef<"Swipes", 'Int'>
+    readonly type: FieldRef<"Swipes", 'SwipeType'>
     readonly created_at: FieldRef<"Swipes", 'DateTime'>
     readonly updated_at: FieldRef<"Swipes", 'DateTime'>
   }
@@ -3282,20 +3312,20 @@ export namespace Prisma {
   }
 
   export type PokemonStatsAvgAggregateOutputType = {
-    pokemom_id: number | null
+    pokemon_id: number | null
     likes: number | null
     disliked: number | null
   }
 
   export type PokemonStatsSumAggregateOutputType = {
-    pokemom_id: number | null
+    pokemon_id: number | null
     likes: number | null
     disliked: number | null
   }
 
   export type PokemonStatsMinAggregateOutputType = {
     id: string | null
-    pokemom_id: number | null
+    pokemon_id: number | null
     likes: number | null
     disliked: number | null
     created_at: Date | null
@@ -3304,7 +3334,7 @@ export namespace Prisma {
 
   export type PokemonStatsMaxAggregateOutputType = {
     id: string | null
-    pokemom_id: number | null
+    pokemon_id: number | null
     likes: number | null
     disliked: number | null
     created_at: Date | null
@@ -3313,7 +3343,7 @@ export namespace Prisma {
 
   export type PokemonStatsCountAggregateOutputType = {
     id: number
-    pokemom_id: number
+    pokemon_id: number
     likes: number
     disliked: number
     created_at: number
@@ -3323,20 +3353,20 @@ export namespace Prisma {
 
 
   export type PokemonStatsAvgAggregateInputType = {
-    pokemom_id?: true
+    pokemon_id?: true
     likes?: true
     disliked?: true
   }
 
   export type PokemonStatsSumAggregateInputType = {
-    pokemom_id?: true
+    pokemon_id?: true
     likes?: true
     disliked?: true
   }
 
   export type PokemonStatsMinAggregateInputType = {
     id?: true
-    pokemom_id?: true
+    pokemon_id?: true
     likes?: true
     disliked?: true
     created_at?: true
@@ -3345,7 +3375,7 @@ export namespace Prisma {
 
   export type PokemonStatsMaxAggregateInputType = {
     id?: true
-    pokemom_id?: true
+    pokemon_id?: true
     likes?: true
     disliked?: true
     created_at?: true
@@ -3354,7 +3384,7 @@ export namespace Prisma {
 
   export type PokemonStatsCountAggregateInputType = {
     id?: true
-    pokemom_id?: true
+    pokemon_id?: true
     likes?: true
     disliked?: true
     created_at?: true
@@ -3450,7 +3480,7 @@ export namespace Prisma {
 
   export type PokemonStatsGroupByOutputType = {
     id: string
-    pokemom_id: number
+    pokemon_id: number
     likes: number
     disliked: number
     created_at: Date
@@ -3478,7 +3508,7 @@ export namespace Prisma {
 
   export type PokemonStatsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    pokemom_id?: boolean
+    pokemon_id?: boolean
     likes?: boolean
     disliked?: boolean
     created_at?: boolean
@@ -3487,7 +3517,7 @@ export namespace Prisma {
 
   export type PokemonStatsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    pokemom_id?: boolean
+    pokemon_id?: boolean
     likes?: boolean
     disliked?: boolean
     created_at?: boolean
@@ -3496,7 +3526,7 @@ export namespace Prisma {
 
   export type PokemonStatsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    pokemom_id?: boolean
+    pokemon_id?: boolean
     likes?: boolean
     disliked?: boolean
     created_at?: boolean
@@ -3505,21 +3535,21 @@ export namespace Prisma {
 
   export type PokemonStatsSelectScalar = {
     id?: boolean
-    pokemom_id?: boolean
+    pokemon_id?: boolean
     likes?: boolean
     disliked?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type PokemonStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pokemom_id" | "likes" | "disliked" | "created_at" | "updated_at", ExtArgs["result"]["pokemonStats"]>
+  export type PokemonStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pokemon_id" | "likes" | "disliked" | "created_at" | "updated_at", ExtArgs["result"]["pokemonStats"]>
 
   export type $PokemonStatsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PokemonStats"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      pokemom_id: number
+      pokemon_id: number
       likes: number
       disliked: number
       created_at: Date
@@ -3948,7 +3978,7 @@ export namespace Prisma {
    */
   interface PokemonStatsFieldRefs {
     readonly id: FieldRef<"PokemonStats", 'String'>
-    readonly pokemom_id: FieldRef<"PokemonStats", 'Int'>
+    readonly pokemon_id: FieldRef<"PokemonStats", 'Int'>
     readonly likes: FieldRef<"PokemonStats", 'Int'>
     readonly disliked: FieldRef<"PokemonStats", 'Int'>
     readonly created_at: FieldRef<"PokemonStats", 'DateTime'>
@@ -4349,7 +4379,8 @@ export namespace Prisma {
   export const SwipesScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
-    pokemin_id: 'pokemin_id',
+    pokemon_id: 'pokemon_id',
+    type: 'type',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -4359,7 +4390,7 @@ export namespace Prisma {
 
   export const PokemonStatsScalarFieldEnum: {
     id: 'id',
-    pokemom_id: 'pokemom_id',
+    pokemon_id: 'pokemon_id',
     likes: 'likes',
     disliked: 'disliked',
     created_at: 'created_at',
@@ -4441,6 +4472,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'SwipeType'
+   */
+  export type EnumSwipeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SwipeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'SwipeType[]'
+   */
+  export type ListEnumSwipeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SwipeType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4462,7 +4507,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    username?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
     email?: StringNullableFilter<"User"> | string | null
     avatar?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
@@ -4473,7 +4518,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    username?: SortOrder
+    username?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     avatar?: SortOrderInput | SortOrder
     password?: SortOrder
@@ -4488,7 +4533,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    username?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
     avatar?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     created_at?: DateTimeFilter<"User"> | Date | string
@@ -4498,7 +4543,7 @@ export namespace Prisma {
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    username?: SortOrder
+    username?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     avatar?: SortOrderInput | SortOrder
     password?: SortOrder
@@ -4514,7 +4559,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    username?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
@@ -4528,7 +4573,8 @@ export namespace Prisma {
     NOT?: SwipesWhereInput | SwipesWhereInput[]
     id?: StringFilter<"Swipes"> | string
     user_id?: StringFilter<"Swipes"> | string
-    pokemin_id?: IntFilter<"Swipes"> | number
+    pokemon_id?: IntFilter<"Swipes"> | number
+    type?: EnumSwipeTypeFilter<"Swipes"> | $Enums.SwipeType
     created_at?: DateTimeFilter<"Swipes"> | Date | string
     updated_at?: DateTimeFilter<"Swipes"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4537,7 +4583,8 @@ export namespace Prisma {
   export type SwipesOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
+    type?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -4545,20 +4592,23 @@ export namespace Prisma {
 
   export type SwipesWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    user_id_pokemon_id?: SwipesUser_idPokemon_idCompoundUniqueInput
     AND?: SwipesWhereInput | SwipesWhereInput[]
     OR?: SwipesWhereInput[]
     NOT?: SwipesWhereInput | SwipesWhereInput[]
     user_id?: StringFilter<"Swipes"> | string
-    pokemin_id?: IntFilter<"Swipes"> | number
+    pokemon_id?: IntFilter<"Swipes"> | number
+    type?: EnumSwipeTypeFilter<"Swipes"> | $Enums.SwipeType
     created_at?: DateTimeFilter<"Swipes"> | Date | string
     updated_at?: DateTimeFilter<"Swipes"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id_pokemon_id">
 
   export type SwipesOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
+    type?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: SwipesCountOrderByAggregateInput
@@ -4574,7 +4624,8 @@ export namespace Prisma {
     NOT?: SwipesScalarWhereWithAggregatesInput | SwipesScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Swipes"> | string
     user_id?: StringWithAggregatesFilter<"Swipes"> | string
-    pokemin_id?: IntWithAggregatesFilter<"Swipes"> | number
+    pokemon_id?: IntWithAggregatesFilter<"Swipes"> | number
+    type?: EnumSwipeTypeWithAggregatesFilter<"Swipes"> | $Enums.SwipeType
     created_at?: DateTimeWithAggregatesFilter<"Swipes"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Swipes"> | Date | string
   }
@@ -4584,7 +4635,7 @@ export namespace Prisma {
     OR?: PokemonStatsWhereInput[]
     NOT?: PokemonStatsWhereInput | PokemonStatsWhereInput[]
     id?: StringFilter<"PokemonStats"> | string
-    pokemom_id?: IntFilter<"PokemonStats"> | number
+    pokemon_id?: IntFilter<"PokemonStats"> | number
     likes?: IntFilter<"PokemonStats"> | number
     disliked?: IntFilter<"PokemonStats"> | number
     created_at?: DateTimeFilter<"PokemonStats"> | Date | string
@@ -4593,7 +4644,7 @@ export namespace Prisma {
 
   export type PokemonStatsOrderByWithRelationInput = {
     id?: SortOrder
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
     created_at?: SortOrder
@@ -4602,7 +4653,7 @@ export namespace Prisma {
 
   export type PokemonStatsWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    pokemom_id?: number
+    pokemon_id?: number
     AND?: PokemonStatsWhereInput | PokemonStatsWhereInput[]
     OR?: PokemonStatsWhereInput[]
     NOT?: PokemonStatsWhereInput | PokemonStatsWhereInput[]
@@ -4610,11 +4661,11 @@ export namespace Prisma {
     disliked?: IntFilter<"PokemonStats"> | number
     created_at?: DateTimeFilter<"PokemonStats"> | Date | string
     updated_at?: DateTimeFilter<"PokemonStats"> | Date | string
-  }, "id" | "pokemom_id">
+  }, "id" | "pokemon_id">
 
   export type PokemonStatsOrderByWithAggregationInput = {
     id?: SortOrder
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
     created_at?: SortOrder
@@ -4631,7 +4682,7 @@ export namespace Prisma {
     OR?: PokemonStatsScalarWhereWithAggregatesInput[]
     NOT?: PokemonStatsScalarWhereWithAggregatesInput | PokemonStatsScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"PokemonStats"> | string
-    pokemom_id?: IntWithAggregatesFilter<"PokemonStats"> | number
+    pokemon_id?: IntWithAggregatesFilter<"PokemonStats"> | number
     likes?: IntWithAggregatesFilter<"PokemonStats"> | number
     disliked?: IntWithAggregatesFilter<"PokemonStats"> | number
     created_at?: DateTimeWithAggregatesFilter<"PokemonStats"> | Date | string
@@ -4640,7 +4691,7 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
-    username: string
+    username?: string | null
     email?: string | null
     avatar?: string | null
     password: string
@@ -4651,7 +4702,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
-    username: string
+    username?: string | null
     email?: string | null
     avatar?: string | null
     password: string
@@ -4662,7 +4713,7 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4673,7 +4724,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4684,7 +4735,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
-    username: string
+    username?: string | null
     email?: string | null
     avatar?: string | null
     password: string
@@ -4694,7 +4745,7 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4704,7 +4755,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -4714,7 +4765,8 @@ export namespace Prisma {
 
   export type SwipesCreateInput = {
     id?: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
     user: UserCreateNestedOneWithoutSwipesInput
@@ -4723,14 +4775,16 @@ export namespace Prisma {
   export type SwipesUncheckedCreateInput = {
     id?: string
     user_id: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type SwipesUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSwipesNestedInput
@@ -4739,7 +4793,8 @@ export namespace Prisma {
   export type SwipesUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4747,14 +4802,16 @@ export namespace Prisma {
   export type SwipesCreateManyInput = {
     id?: string
     user_id: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type SwipesUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4762,32 +4819,33 @@ export namespace Prisma {
   export type SwipesUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PokemonStatsCreateInput = {
     id?: string
-    pokemom_id: number
-    likes: number
-    disliked: number
+    pokemon_id: number
+    likes?: number
+    disliked?: number
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type PokemonStatsUncheckedCreateInput = {
     id?: string
-    pokemom_id: number
-    likes: number
-    disliked: number
+    pokemon_id: number
+    likes?: number
+    disliked?: number
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type PokemonStatsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemom_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
     likes?: IntFieldUpdateOperationsInput | number
     disliked?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4796,7 +4854,7 @@ export namespace Prisma {
 
   export type PokemonStatsUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemom_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
     likes?: IntFieldUpdateOperationsInput | number
     disliked?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4805,16 +4863,16 @@ export namespace Prisma {
 
   export type PokemonStatsCreateManyInput = {
     id?: string
-    pokemom_id: number
-    likes: number
-    disliked: number
+    pokemon_id: number
+    likes?: number
+    disliked?: number
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type PokemonStatsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemom_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
     likes?: IntFieldUpdateOperationsInput | number
     disliked?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4823,7 +4881,7 @@ export namespace Prisma {
 
   export type PokemonStatsUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemom_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
     likes?: IntFieldUpdateOperationsInput | number
     disliked?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4977,27 +5035,41 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type EnumSwipeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSwipeTypeFilter<$PrismaModel> | $Enums.SwipeType
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
   }
 
+  export type SwipesUser_idPokemon_idCompoundUniqueInput = {
+    user_id: string
+    pokemon_id: number
+  }
+
   export type SwipesCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
+    type?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type SwipesAvgOrderByAggregateInput = {
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
   }
 
   export type SwipesMaxOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
+    type?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -5005,13 +5077,14 @@ export namespace Prisma {
   export type SwipesMinOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
+    type?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type SwipesSumOrderByAggregateInput = {
-    pokemin_id?: SortOrder
+    pokemon_id?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5030,9 +5103,19 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type EnumSwipeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSwipeTypeWithAggregatesFilter<$PrismaModel> | $Enums.SwipeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSwipeTypeFilter<$PrismaModel>
+    _max?: NestedEnumSwipeTypeFilter<$PrismaModel>
+  }
+
   export type PokemonStatsCountOrderByAggregateInput = {
     id?: SortOrder
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
     created_at?: SortOrder
@@ -5040,14 +5123,14 @@ export namespace Prisma {
   }
 
   export type PokemonStatsAvgOrderByAggregateInput = {
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
   }
 
   export type PokemonStatsMaxOrderByAggregateInput = {
     id?: SortOrder
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
     created_at?: SortOrder
@@ -5056,7 +5139,7 @@ export namespace Prisma {
 
   export type PokemonStatsMinOrderByAggregateInput = {
     id?: SortOrder
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
     created_at?: SortOrder
@@ -5064,7 +5147,7 @@ export namespace Prisma {
   }
 
   export type PokemonStatsSumOrderByAggregateInput = {
-    pokemom_id?: SortOrder
+    pokemon_id?: SortOrder
     likes?: SortOrder
     disliked?: SortOrder
   }
@@ -5135,6 +5218,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type EnumSwipeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.SwipeType
   }
 
   export type UserUpdateOneRequiredWithoutSwipesNestedInput = {
@@ -5254,6 +5341,13 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumSwipeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSwipeTypeFilter<$PrismaModel> | $Enums.SwipeType
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5281,16 +5375,28 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumSwipeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSwipeTypeWithAggregatesFilter<$PrismaModel> | $Enums.SwipeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSwipeTypeFilter<$PrismaModel>
+    _max?: NestedEnumSwipeTypeFilter<$PrismaModel>
+  }
+
   export type SwipesCreateWithoutUserInput = {
     id?: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type SwipesUncheckedCreateWithoutUserInput = {
     id?: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -5327,14 +5433,15 @@ export namespace Prisma {
     NOT?: SwipesScalarWhereInput | SwipesScalarWhereInput[]
     id?: StringFilter<"Swipes"> | string
     user_id?: StringFilter<"Swipes"> | string
-    pokemin_id?: IntFilter<"Swipes"> | number
+    pokemon_id?: IntFilter<"Swipes"> | number
+    type?: EnumSwipeTypeFilter<"Swipes"> | $Enums.SwipeType
     created_at?: DateTimeFilter<"Swipes"> | Date | string
     updated_at?: DateTimeFilter<"Swipes"> | Date | string
   }
 
   export type UserCreateWithoutSwipesInput = {
     id?: string
-    username: string
+    username?: string | null
     email?: string | null
     avatar?: string | null
     password: string
@@ -5344,7 +5451,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSwipesInput = {
     id?: string
-    username: string
+    username?: string | null
     email?: string | null
     avatar?: string | null
     password: string
@@ -5370,7 +5477,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSwipesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -5380,7 +5487,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSwipesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
@@ -5390,28 +5497,32 @@ export namespace Prisma {
 
   export type SwipesCreateManyUserInput = {
     id?: string
-    pokemin_id: number
+    pokemon_id: number
+    type: $Enums.SwipeType
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type SwipesUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SwipesUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SwipesUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    pokemin_id?: IntFieldUpdateOperationsInput | number
+    pokemon_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumSwipeTypeFieldUpdateOperationsInput | $Enums.SwipeType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

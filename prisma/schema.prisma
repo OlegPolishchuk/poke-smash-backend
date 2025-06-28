@@ -29,20 +29,28 @@ model User {
 }
 
 model Swipes {
-  id         String @id @default(uuid())
-  user       User   @relation(fields: [user_id], references: [id])
+  id         String    @id @default(uuid())
+  user       User      @relation(fields: [user_id], references: [id])
   user_id    String
-  pokemin_id Int
+  pokemon_id Int
+  type       SwipeType
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@unique([user_id, pokemon_id]) // пользователь может свайпнуть одного покемона только один раз
+}
+
+enum SwipeType {
+  LIKE
+  DISLIKE
 }
 
 model PokemonStats {
   id         String @id @default(uuid())
-  pokemom_id Int    @unique
-  likes      Int
-  disliked   Int
+  pokemon_id Int    @unique // Привязан к конкретному покемону по его ID
+  likes      Int    @default(0)
+  disliked   Int    @default(0)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

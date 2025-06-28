@@ -24,8 +24,21 @@ services:
     networks:
       - pokesmash
 
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - pokesmash
+
 volumes:
   postgres_data:
+  redis_data:
 
 networks:
   pokesmash:

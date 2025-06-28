@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/generated/prisma';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
