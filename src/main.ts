@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { RedisStore } from 'connect-redis';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
@@ -23,6 +24,15 @@ async function bootstrap() {
     client: redisClient,
     prefix: 'poke-redis',
   });
+
+  const configOpenApi = new DocumentBuilder()
+    .setTitle('Pokemon api')
+    .setDescription('Pokemon API')
+    .setVersion('1.0')
+    .addTag('docs')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, configOpenApi);
+  SwaggerModule.setup('docs', app, documentFactory);
 
   // Настройка приложения
   app.setGlobalPrefix('api');
