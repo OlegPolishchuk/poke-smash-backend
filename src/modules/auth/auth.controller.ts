@@ -1,10 +1,10 @@
 import { Controller, Get, HttpCode, Post, Res, Session } from '@nestjs/common';
 import { Response } from 'express';
 
-import { AuthService } from '@/src/core/auth/auth.service';
-import { AppSession } from '@/src/core/auth/types';
-import { UserDto } from '@/src/core/user/dto/user.dto';
-import { UserService } from '@/src/core/user/user.service';
+import { AuthService } from '@/src/modules/auth/auth.service';
+import { AppSession } from '@/src/modules/auth/types';
+import { UserDto } from '@/src/modules/user/dto/user.dto';
+import { UserService } from '@/src/modules/user/user.service';
 
 @Controller('auth')
 export class AuthController {

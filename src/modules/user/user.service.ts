@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
 import { PrismaService } from '@/src/core/prisma/prisma.service';
-import { UserDto } from '@/src/core/user/dto/user.dto';
+import { UserDto } from '@/src/modules/user/dto/user.dto';
 
 @Injectable()
 export class UserService {

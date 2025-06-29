@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { $Enums } from '@prisma/generated/prisma';
 
+import { pokemonApi } from '@/src/api/pokemon/pokemon.api';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 
 import SwipeType = $Enums.SwipeType;
@@ -123,5 +124,11 @@ export class PokemonService {
         }),
       ]);
     }
+  }
+
+  async getPokemon(id: number = 1) {
+    const pokemonRes = await pokemonApi.getPokemon(id);
+
+    return pokemonRes.data;
   }
 }
