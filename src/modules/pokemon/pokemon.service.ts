@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { $Enums } from '@prisma/generated/prisma';
 
 import { pokemonApi } from '@/src/api/pokemon/pokemon.api';
@@ -38,39 +38,52 @@ export class PokemonService {
             data: { type: SwipeType.LIKE },
           }),
           this.prismaService.pokemonStats.upsert({
-            where: { pokemon_id: pokemon_id },
+            where: { pokemon_id },
             update: {
               likes: { increment: 1 },
               disliked: { decrement: 1 },
             },
             create: {
-              pokemon_id: pokemon_id,
+              pokemon_id,
               likes: 1,
               disliked: 0,
             },
           }),
+          this.prismaService.user.update({
+            where: { id: user_id },
+            data: {
+              likes: { increment: 1 },
+              dislikes: { decrement: 1 },
+            },
+          }),
         ]);
       }
-      // Если уже LIKE — ничего не делаем или обновляем timestamp
+      // Если уже LIKE — ничего не делаем
     } else {
       // Новый лайк
       await this.prismaService.$transaction([
         this.prismaService.swipes.create({
           data: {
-            user_id: user_id,
-            pokemon_id: pokemon_id,
+            user_id,
+            pokemon_id,
             type: SwipeType.LIKE,
           },
         }),
         this.prismaService.pokemonStats.upsert({
-          where: { pokemon_id: pokemon_id },
+          where: { pokemon_id },
           update: {
             likes: { increment: 1 },
           },
           create: {
-            pokemon_id: pokemon_id,
+            pokemon_id,
             likes: 1,
             disliked: 0,
+          },
+        }),
+        this.prismaService.user.update({
+          where: { id: user_id },
+          data: {
+            likes: { increment: 1 },
           },
         }),
       ]);
@@ -98,6 +111,13 @@ export class PokemonService {
               disliked: 1,
             },
           }),
+          this.prismaService.user.update({
+            where: { id: user_id },
+            data: {
+              likes: { decrement: 1 },
+              dislikes: { increment: 1 },
+            },
+          }),
         ]);
       }
       // Уже дизлайк — ничего не делаем
@@ -122,13 +142,33 @@ export class PokemonService {
             disliked: 1,
           },
         }),
+        this.prismaService.user.update({
+          where: { id: user_id },
+          data: {
+            dislikes: { increment: 1 },
+          },
+        }),
       ]);
     }
   }
 
   async getPokemon(id: number = 1) {
-    const pokemonRes = await pokemonApi.getPokemon(id);
+    try {
+      const pokemonRes = await pokemonApi.getPokemon(id);
 
-    return pokemonRes.data;
+      return pokemonRes.data;
+    } catch {
+      throw new NotFoundException();
+    }
+  }
+
+  async getPokemonSpecies(id: number) {
+    try {
+      const pokemonSpicesRes = await pokemonApi.getSpecies(id);
+
+      return pokemonSpicesRes.data;
+    } catch {
+      throw new NotFoundException();
+    }
   }
 }

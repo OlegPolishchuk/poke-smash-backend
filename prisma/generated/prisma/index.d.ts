@@ -4,11 +4,10 @@
 **/
 
 import * as runtime from './runtime/library.js';
-import $Types = runtime.Types // general types
-import $Public = runtime.Types.Public
-import $Utils = runtime.Types.Utils
-import $Extensions = runtime.Types.Extensions
-import $Result = runtime.Types.Result
+import $Public = runtime.Types.Public;
+import $Utils = runtime.Types.Utils;
+import $Extensions = runtime.Types.Extensions;
+import $Result = runtime.Types.Result;
 
 export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
@@ -16,7 +15,7 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 /**
  * Model User
  * 
- */
+ */ 
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
  * Model Swipes
@@ -203,39 +202,48 @@ export class PrismaClient<
 }
 
 export namespace Prisma {
-  export import DMMF = runtime.DMMF
-
-  export type PrismaPromise<T> = $Public.PrismaPromise<T>
-
+  export import DMMF = runtime.DMMF;
   /**
    * Validator
    */
-  export import validator = runtime.Public.validator
-
+  export import validator = runtime.Public.validator;
   /**
    * Prisma Errors
    */
-  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError
-  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError
-  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
-  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
-  export import PrismaClientValidationError = runtime.PrismaClientValidationError
-
+  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError;
+  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError;
+  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError;
+  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError;
+  export import PrismaClientValidationError = runtime.PrismaClientValidationError;
   /**
    * Re-export of sql-template-tag
    */
-  export import sql = runtime.sqltag
-  export import empty = runtime.empty
-  export import join = runtime.join
-  export import raw = runtime.raw
-  export import Sql = runtime.Sql
-
-
-
+  export import sql = runtime.sqltag;
+  export import empty = runtime.empty;
+  export import join = runtime.join;
+  export import raw = runtime.raw;
+  export import Sql = runtime.Sql;
   /**
    * Decimal.js
    */
-  export import Decimal = runtime.Decimal
+  export import Decimal = runtime.Decimal;
+  /**
+   * Extensions
+   */
+  export import Extension = $Extensions.UserArgs;
+  export import getExtensionContext = runtime.Extensions.getExtensionContext;
+  export import Args = $Public.Args;
+  export import Payload = $Public.Payload;
+  export import Result = $Public.Result;
+  export import Exact = $Public.Exact;
+  export import JsonObject = runtime.JsonObject;
+  export import JsonArray = runtime.JsonArray;
+  export import JsonValue = runtime.JsonValue;
+  export import InputJsonObject = runtime.InputJsonObject;
+  export import InputJsonArray = runtime.InputJsonArray;
+  export import InputJsonValue = runtime.InputJsonValue;
+
+  export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
   export type DecimalJsLike = runtime.DecimalJsLike
 
@@ -247,15 +255,6 @@ export namespace Prisma {
   export type MetricHistogram = runtime.MetricHistogram
   export type MetricHistogramBucket = runtime.MetricHistogramBucket
 
-  /**
-  * Extensions
-  */
-  export import Extension = $Extensions.UserArgs
-  export import getExtensionContext = runtime.Extensions.getExtensionContext
-  export import Args = $Public.Args
-  export import Payload = $Public.Payload
-  export import Result = $Public.Result
-  export import Exact = $Public.Exact
 
   /**
    * Prisma Client JS version: 6.10.1
@@ -267,17 +266,6 @@ export namespace Prisma {
 
   export const prismaVersion: PrismaVersion
 
-  /**
-   * Utility Types
-   */
-
-
-  export import JsonObject = runtime.JsonObject
-  export import JsonArray = runtime.JsonArray
-  export import JsonValue = runtime.JsonValue
-  export import InputJsonObject = runtime.InputJsonObject
-  export import InputJsonArray = runtime.InputJsonArray
-  export import InputJsonValue = runtime.InputJsonValue
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
@@ -436,7 +424,7 @@ export namespace Prisma {
   ? False
   : T extends Uint8Array
   ? False
-  : T extends BigInt
+  : T extends bigint
   ? False
   : T extends object
   ? True
@@ -1104,8 +1092,20 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    likes: number | null
+    dislikes: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    likes: number | null
+    dislikes: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1116,6 +1116,8 @@ export namespace Prisma {
     password: string | null
     created_at: Date | null
     updated_at: Date | null
+    likes: number | null
+    dislikes: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1126,6 +1128,8 @@ export namespace Prisma {
     password: string | null
     created_at: Date | null
     updated_at: Date | null
+    likes: number | null
+    dislikes: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1136,9 +1140,21 @@ export namespace Prisma {
     password: number
     created_at: number
     updated_at: number
+    likes: number
+    dislikes: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    likes?: true
+    dislikes?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    likes?: true
+    dislikes?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -1148,6 +1164,8 @@ export namespace Prisma {
     password?: true
     created_at?: true
     updated_at?: true
+    likes?: true
+    dislikes?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1158,6 +1176,8 @@ export namespace Prisma {
     password?: true
     created_at?: true
     updated_at?: true
+    likes?: true
+    dislikes?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1168,6 +1188,8 @@ export namespace Prisma {
     password?: true
     created_at?: true
     updated_at?: true
+    likes?: true
+    dislikes?: true
     _all?: true
   }
 
@@ -1209,6 +1231,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1239,6 +1273,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -1251,7 +1287,11 @@ export namespace Prisma {
     password: string
     created_at: Date
     updated_at: Date
+    likes: number
+    dislikes: number
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1278,6 +1318,8 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
+    likes?: boolean
+    dislikes?: boolean
     Swipes?: boolean | User$SwipesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1290,6 +1332,8 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
+    likes?: boolean
+    dislikes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1300,6 +1344,8 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
+    likes?: boolean
+    dislikes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1310,9 +1356,11 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
+    likes?: boolean
+    dislikes?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "avatar" | "password" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "avatar" | "password" | "created_at" | "updated_at" | "likes" | "dislikes", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Swipes?: boolean | User$SwipesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1333,6 +1381,8 @@ export namespace Prisma {
       password: string
       created_at: Date
       updated_at: Date
+      likes: number
+      dislikes: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1734,20 +1784,20 @@ export namespace Prisma {
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>)   | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>)   | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>)   | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    finally(onfinally?: (() => void)   | null): $Utils.JsPromise<T>
   }
 
 
@@ -1764,6 +1814,8 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly created_at: FieldRef<"User", 'DateTime'>
     readonly updated_at: FieldRef<"User", 'DateTime'>
+    readonly likes: FieldRef<"User", 'Int'>
+    readonly dislikes: FieldRef<"User", 'Int'>
   }
     
 
@@ -2856,20 +2908,20 @@ export namespace Prisma {
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>)   | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>)   | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>)   | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    finally(onfinally?: (() => void)   | null): $Utils.JsPromise<T>
   }
 
 
@@ -3954,20 +4006,20 @@ export namespace Prisma {
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>)   | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>)   | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>)   | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    finally(onfinally?: (() => void)   | null): $Utils.JsPromise<T>
   }
 
 
@@ -4370,7 +4422,9 @@ export namespace Prisma {
     avatar: 'avatar',
     password: 'password',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    likes: 'likes',
+    dislikes: 'dislikes'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4513,6 +4567,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
+    likes?: IntFilter<"User"> | number
+    dislikes?: IntFilter<"User"> | number
     Swipes?: SwipesListRelationFilter
   }
 
@@ -4524,6 +4580,8 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    likes?: SortOrder
+    dislikes?: SortOrder
     Swipes?: SwipesOrderByRelationAggregateInput
   }
 
@@ -4538,6 +4596,8 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
+    likes?: IntFilter<"User"> | number
+    dislikes?: IntFilter<"User"> | number
     Swipes?: SwipesListRelationFilter
   }, "id" | "email">
 
@@ -4549,9 +4609,13 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    likes?: SortOrder
+    dislikes?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -4565,6 +4629,8 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    likes?: IntWithAggregatesFilter<"User"> | number
+    dislikes?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type SwipesWhereInput = {
@@ -4697,6 +4763,8 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    likes?: number
+    dislikes?: number
     Swipes?: SwipesCreateNestedManyWithoutUserInput
   }
 
@@ -4708,6 +4776,8 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    likes?: number
+    dislikes?: number
     Swipes?: SwipesUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -4719,6 +4789,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
     Swipes?: SwipesUpdateManyWithoutUserNestedInput
   }
 
@@ -4730,6 +4802,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
     Swipes?: SwipesUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -4741,6 +4815,8 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    likes?: number
+    dislikes?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -4751,6 +4827,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -4761,6 +4839,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
   }
 
   export type SwipesCreateInput = {
@@ -4929,6 +5009,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type SwipesListRelationFilter = {
     every?: SwipesWhereInput
     some?: SwipesWhereInput
@@ -4952,6 +5043,13 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    likes?: SortOrder
+    dislikes?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    likes?: SortOrder
+    dislikes?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -4962,6 +5060,8 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    likes?: SortOrder
+    dislikes?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -4972,6 +5072,13 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    likes?: SortOrder
+    dislikes?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    likes?: SortOrder
+    dislikes?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5024,7 +5131,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5032,7 +5139,12 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumSwipeTypeFilter<$PrismaModel = never> = {
@@ -5085,22 +5197,6 @@ export namespace Prisma {
 
   export type SwipesSumOrderByAggregateInput = {
     pokemon_id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumSwipeTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5178,6 +5274,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type SwipesUpdateManyWithoutUserNestedInput = {
     create?: XOR<SwipesCreateWithoutUserInput, SwipesUncheckedCreateWithoutUserInput> | SwipesCreateWithoutUserInput[] | SwipesUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SwipesCreateOrConnectWithoutUserInput | SwipesCreateOrConnectWithoutUserInput[]
@@ -5210,14 +5314,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutSwipesInput, UserUncheckedCreateWithoutSwipesInput>
     connectOrCreate?: UserCreateOrConnectWithoutSwipesInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type EnumSwipeTypeFieldUpdateOperationsInput = {
@@ -5271,6 +5367,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5286,17 +5393,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5341,13 +5437,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumSwipeTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSwipeTypeFilter<$PrismaModel> | $Enums.SwipeType
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5373,6 +5462,13 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumSwipeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeType | EnumSwipeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SwipeType[] | ListEnumSwipeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSwipeTypeFilter<$PrismaModel> | $Enums.SwipeType
   }
 
   export type NestedEnumSwipeTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5447,6 +5543,8 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    likes?: number
+    dislikes?: number
   }
 
   export type UserUncheckedCreateWithoutSwipesInput = {
@@ -5457,6 +5555,8 @@ export namespace Prisma {
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    likes?: number
+    dislikes?: number
   }
 
   export type UserCreateOrConnectWithoutSwipesInput = {
@@ -5483,6 +5583,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateWithoutSwipesInput = {
@@ -5493,6 +5595,8 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: IntFieldUpdateOperationsInput | number
+    dislikes?: IntFieldUpdateOperationsInput | number
   }
 
   export type SwipesCreateManyUserInput = {

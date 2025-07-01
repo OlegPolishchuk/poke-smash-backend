@@ -14,6 +14,8 @@ export class UserService {
     avatar: true,
     created_at: true,
     updated_at: true,
+    likes: true,
+    dislikes: true,
     password: false,
   };
 

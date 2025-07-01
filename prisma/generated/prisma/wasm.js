@@ -127,7 +127,9 @@ exports.Prisma.UserScalarFieldEnum = {
   avatar: 'avatar',
   password: 'password',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  likes: 'likes',
+  dislikes: 'dislikes'
 };
 
 exports.Prisma.SwipesScalarFieldEnum = {
