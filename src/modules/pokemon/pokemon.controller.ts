@@ -82,7 +82,7 @@ export class PokemonController {
     type: PokemonSpecies, // Тип для возврата
   })
   @ApiResponse({ status: 404, description: 'Species not found' })
-  async getPokemonSpecies(@Param() param) {
+  async getPokemonSpecies(@Param() param: { id: number }) {
     const pokemonId = +param.id;
 
     const pokemonSpecies = await this.pokemonService.getPokemonSpecies(pokemonId);
@@ -92,5 +92,27 @@ export class PokemonController {
     }
 
     return pokemonSpecies;
+  }
+
+  @Get('/statistic/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon statistic(swipes) by ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'Pokemon ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon statistic data',
+    type: PokemonSpecies, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'Species not found' })
+  async getPokemonStatistic(@Param() param: { id: number }) {
+    const pokemonId = +param.id;
+
+    const stats = await this.pokemonService.getPokemonSwipeStatistic(pokemonId);
+
+    if (!stats) {
+      return new NotFoundException();
+    }
+
+    return stats;
   }
 }

@@ -230,4 +230,14 @@ export class PokemonService {
       throw new NotFoundException();
     }
   }
+
+  async getPokemonSwipeStatistic(pokemon_id: number) {
+    try {
+      return await this.prismaService.pokemonStats.findUnique({
+        where: { pokemon_id },
+      });
+    } catch {
+      throw new NotFoundException();
+    }
+  }
 }
