@@ -31,8 +31,6 @@ export class PokemonController {
     const userId = session.user_id;
     const pokemonData = { pokemon_id: pokemonDto.pokemon_id, user_id: userId };
 
-    console.log('pokemonData =>', pokemonData);
-
     if (!userId) {
       return new UnauthorizedException();
     }

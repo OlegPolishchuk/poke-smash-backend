@@ -29,7 +29,7 @@ export class PokemonService {
   async like({ user_id, pokemon_id }: SwipeDto) {
     const existingSwipe = await this.getExistingSwipe({ user_id, pokemon_id });
 
-    if (existingSwipe) {
+    if (existingSwipe?.id) {
       if (existingSwipe.type === 'DISLIKE') {
         // Был дизлайк — обновляем на лайк
         await this.prismaService.$transaction([
@@ -37,11 +37,12 @@ export class PokemonService {
             where: { id: existingSwipe.id },
             data: { type: SwipeType.LIKE },
           }),
+
           this.prismaService.pokemonStats.upsert({
             where: { pokemon_id },
             update: {
               likes: { increment: 1 },
-              disliked: { decrement: 1 },
+              // disliked: { decrement: 1 },
             },
             create: {
               pokemon_id,
@@ -56,8 +57,21 @@ export class PokemonService {
             },
           }),
         ]);
+      } else {
+        // Если уже LIKE — обновляем количесво лайков в статистике покемона
+        await this.prismaService.pokemonStats.upsert({
+          where: { pokemon_id },
+          update: {
+            likes: { increment: 1 },
+            // disliked: { decrement: 1 },
+          },
+          create: {
+            pokemon_id,
+            likes: 1,
+            disliked: 0,
+          },
+        });
       }
-      // Если уже LIKE — ничего не делаем
     } else {
       // Новый лайк
       await this.prismaService.$transaction([
@@ -103,7 +117,6 @@ export class PokemonService {
       },
     });
 
-    console.log('user Like =>', user);
     return user;
   }
 
@@ -137,6 +150,21 @@ export class PokemonService {
         ]);
       }
       // Уже дизлайк — ничего не делаем
+      else {
+        // Если уже LIKE — обновляем количесво лайков в статистике покемона
+        await this.prismaService.pokemonStats.upsert({
+          where: { pokemon_id },
+          update: {
+            // likes: { increment: 1 },
+            disliked: { increment: 1 },
+          },
+          create: {
+            pokemon_id,
+            likes: 1,
+            disliked: 0,
+          },
+        });
+      }
     } else {
       // Новый дизлайк
       await this.prismaService.$transaction([
