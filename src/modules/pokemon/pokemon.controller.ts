@@ -28,19 +28,25 @@ export class PokemonController {
   @ApiResponse({ status: 201, description: 'Swipe recorded' }) // Успешный ответ
   @ApiResponse({ status: 401, description: 'Unauthorized' }) // Ошибка аутентификации
   async swipe(@Session() session: AppSession, @Body() pokemonDto: SwipePokemonDto) {
-    const userId = session.user.id;
+    const userId = session.user_id;
     const pokemonData = { pokemon_id: pokemonDto.pokemon_id, user_id: userId };
+
+    console.log('pokemonData =>', pokemonData);
 
     if (!userId) {
       return new UnauthorizedException();
     }
 
+    await new Promise((res) => {
+      setTimeout(res, 2000);
+    });
+
     if (pokemonDto.action === 'like') {
-      await this.pokemonService.like(pokemonData);
+      return await this.pokemonService.like(pokemonData);
     }
 
     if (pokemonDto.action === 'dislike') {
-      await this.pokemonService.dislike(pokemonData);
+      return await this.pokemonService.dislike(pokemonData);
     }
   }
 

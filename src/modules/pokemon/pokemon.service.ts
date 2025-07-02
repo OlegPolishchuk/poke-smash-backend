@@ -53,7 +53,6 @@ export class PokemonService {
             where: { id: user_id },
             data: {
               likes: { increment: 1 },
-              dislikes: { decrement: 1 },
             },
           }),
         ]);
@@ -88,6 +87,24 @@ export class PokemonService {
         }),
       ]);
     }
+
+    const user = await this.prismaService.user.findUnique({
+      where: { id: user_id },
+      select: {
+        likes: true,
+        dislikes: true,
+        updated_at: true,
+        created_at: false,
+        id: true,
+        avatar: false,
+        email: false,
+        username: false,
+        password: false,
+      },
+    });
+
+    console.log('user Like =>', user);
+    return user;
   }
 
   async dislike({ user_id, pokemon_id }: SwipeDto) {
@@ -114,7 +131,6 @@ export class PokemonService {
           this.prismaService.user.update({
             where: { id: user_id },
             data: {
-              likes: { decrement: 1 },
               dislikes: { increment: 1 },
             },
           }),
@@ -150,6 +166,21 @@ export class PokemonService {
         }),
       ]);
     }
+
+    return await this.prismaService.user.findUnique({
+      where: { id: user_id },
+      select: {
+        likes: true,
+        dislikes: true,
+        updated_at: true,
+        created_at: false,
+        id: true,
+        avatar: false,
+        email: false,
+        username: false,
+        password: false,
+      },
+    });
   }
 
   async getPokemon(id: number = 1) {
