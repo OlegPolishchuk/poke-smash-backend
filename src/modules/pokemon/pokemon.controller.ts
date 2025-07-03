@@ -115,4 +115,46 @@ export class PokemonController {
 
     return stats;
   }
+
+  @Get('/ability/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon ability by ID/name' })
+  @ApiParam({ name: 'id/name', type: Number, description: 'ability ID/name' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon ability data',
+    type: PokemonSpecies, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'ability not found' })
+  async getPokemonAbility(@Param() param: { id: number | string }) {
+    const abilityId = param.id;
+
+    const ability = await this.pokemonService.getPokemonAbility(abilityId);
+
+    console.log('@@@@ability =>', ability);
+
+    if (!ability) {
+      return new NotFoundException();
+    }
+
+    return ability;
+  }
+
+  @Get('/weaknesses/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon weaknesses by ID/name' })
+  @ApiParam({ name: 'id/name', type: Number, description: 'weaknesses ID/name' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon weaknesses data',
+    type: PokemonSpecies, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'weaknesses not found' })
+  async getPokemonWeaknesses(@Param() param: { id: number | string }) {
+    const pokemonID = param.id;
+
+    const weaknesses = await this.pokemonService.getPokemonWeaknesses(pokemonID);
+
+    return { weaknesses };
+  }
 }

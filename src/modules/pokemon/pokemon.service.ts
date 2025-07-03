@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { $Enums } from '@prisma/generated/prisma';
+import { AxiosResponse } from 'axios';
 
+import { Stat } from '@/src/api/pokemon/dto/stats';
 import { pokemonApi } from '@/src/api/pokemon/pokemon.api';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 
@@ -272,6 +274,29 @@ export class PokemonService {
 
     if (stats) {
       this.eventEmitter.emit('statistic.updated', stats);
+    }
+  }
+
+  async getPokemonAbility(id: number | string) {
+    try {
+      const ability = await pokemonApi.getAbility(id);
+
+      return ability.data;
+    } catch (e) {
+      console.log('error in "getPokemonAbility"', e);
+      throw new NotFoundException();
+    }
+  }
+
+  async getPokemonWeaknesses(id: number | string) {
+    try {
+      const typeRes = await pokemonApi.getType(id);
+
+      const damage = typeRes.data.damage_relations;
+      return damage.double_damage_from.map((data) => data.name);
+    } catch (e) {
+      console.log('error in "getPokemonAbility"', e);
+      throw new NotFoundException();
     }
   }
 }
