@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { $Enums } from '@prisma/generated/prisma';
 
 import { pokemonApi } from '@/src/api/pokemon/pokemon.api';
@@ -13,7 +14,10 @@ interface SwipeDto {
 
 @Injectable()
 export class PokemonService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   async getExistingSwipe({ user_id, pokemon_id }: SwipeDto) {
     return this.prismaService.swipes.findUnique({
@@ -101,6 +105,8 @@ export class PokemonService {
         }),
       ]);
     }
+
+    await this.updateStats(pokemon_id);
 
     const user = await this.prismaService.user.findUnique({
       where: { id: user_id },
@@ -195,6 +201,8 @@ export class PokemonService {
       ]);
     }
 
+    await this.updateStats(pokemon_id);
+
     return await this.prismaService.user.findUnique({
       where: { id: user_id },
       select: {
@@ -233,11 +241,37 @@ export class PokemonService {
 
   async getPokemonSwipeStatistic(pokemon_id: number) {
     try {
-      return await this.prismaService.pokemonStats.findUnique({
+      const pokemonStats = await this.prismaService.pokemonStats.findUnique({
         where: { pokemon_id },
       });
+
+      if (!pokemonStats) {
+        return await this.prismaService.pokemonStats.create({
+          data: { pokemon_id: pokemon_id },
+          select: {
+            pokemon_id: true,
+            disliked: true,
+            id: true,
+            created_at: true,
+            updated_at: true,
+            likes: true,
+          },
+        });
+      }
+
+      return pokemonStats;
     } catch {
       throw new NotFoundException();
+    }
+  }
+
+  async updateStats(pokemonId: number) {
+    const stats = await this.prismaService.pokemonStats.findUnique({
+      where: { pokemon_id: pokemonId },
+    });
+
+    if (stats) {
+      this.eventEmitter.emit('statistic.updated', stats);
     }
   }
 }

@@ -57,7 +57,7 @@ async function bootstrap() {
   );
 
   // Запуск приложения
-  const port = config.get('APPLICATION_PORT') || 3000;
+  const port = config.get('APPLICATION_PORT') || 4000;
   await app.listen(port);
   console.log(`Приложение запущено на порту ${port}`);
 }
