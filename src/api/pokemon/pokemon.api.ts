@@ -1,11 +1,12 @@
 import { api } from '@/src/api/instance';
 import { Ability } from '@/src/api/pokemon/dto/ability';
+import { EvolutionChain } from '@/src/api/pokemon/dto/evolution';
 import { Pokemon, PokemonSpecies } from '@/src/api/pokemon/dto/pokemon';
 import { Stat } from '@/src/api/pokemon/dto/stats';
 import { Type } from '@/src/api/pokemon/dto/types';
 
 export const pokemonApi = {
-  getPokemon(id: number) {
+  getPokemon(id: number | string) {
     return api.get<Pokemon>(`pokemon/${id}`);
   },
 
@@ -23,5 +24,9 @@ export const pokemonApi = {
 
   getStat(id: number | string) {
     return api.get<Stat>(`stat/${id}`);
+  },
+
+  getEvolutions(id: number | string) {
+    return api.get<EvolutionChain>(`evolution-chain/${id}`);
   },
 };

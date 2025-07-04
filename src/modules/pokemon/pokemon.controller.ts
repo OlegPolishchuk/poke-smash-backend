@@ -50,8 +50,8 @@ export class PokemonController {
 
   @Get(':id')
   @HttpCode(200)
-  @ApiOperation({ summary: 'Get Pokemon by ID' })
-  @ApiParam({ name: 'id', type: Number }) // Описание параметра пути
+  @ApiOperation({ summary: 'Get Pokemon by ID/Name' })
+  @ApiParam({ name: 'id', type: Number || String }) // Описание параметра пути
   @ApiResponse({
     status: 200,
     description: 'Pokemon data',
@@ -59,7 +59,7 @@ export class PokemonController {
   })
   @ApiResponse({ status: 404, description: 'Pokemon not found' })
   async getPokemon(@Query() query, @Param() param) {
-    const pokemonId = +param.id;
+    const pokemonId = param.id;
 
     console.log('pokemonId =>', pokemonId);
 
@@ -131,8 +131,6 @@ export class PokemonController {
 
     const ability = await this.pokemonService.getPokemonAbility(abilityId);
 
-    console.log('@@@@ability =>', ability);
-
     if (!ability) {
       return new NotFoundException();
     }
@@ -156,5 +154,25 @@ export class PokemonController {
     const weaknesses = await this.pokemonService.getPokemonWeaknesses(pokemonID);
 
     return { weaknesses };
+  }
+
+  @Get('/evolutions/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon evolutions by ID/name' })
+  @ApiParam({ name: 'id/name', type: Number, description: 'evolutions ID/name' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon evolutions data',
+    type: PokemonSpecies, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'evolutions not found' })
+  async getPokemonEvolutions(@Param() param: { id: number | string }) {
+    const pokemonID = param.id;
+
+    console.log('pokemonID =>', pokemonID);
+
+    const evolutions = await this.pokemonService.getPokemonEvolutions(pokemonID);
+
+    return evolutions;
   }
 }

@@ -2,8 +2,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Name, NamedAPIResource } from './utility';
 
-// Предполагаем, что эти классы уже существуют
-
 export class EvolutionDetail {
   @ApiPropertyOptional({
     type: NamedAPIResource,
