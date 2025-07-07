@@ -616,3 +616,11 @@ export class PokemonSpecies {
   @ApiProperty({ type: [PokemonSpeciesVariety] })
   varieties: PokemonSpeciesVariety[];
 }
+
+export class PokemonWithStats extends Pokemon {
+  @ApiProperty({ type: Number })
+  likes: number;
+
+  @ApiProperty({ type: Number })
+  dislikes: number;
+}

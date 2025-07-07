@@ -10,9 +10,10 @@ import {
   Session,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
 
-import { Pokemon, PokemonSpecies } from '@/src/api/pokemon/dto/pokemon';
+import { PaginatedListDto } from '@/src/api/pokemon/dto/paginate.dto';
+import { Pokemon, PokemonSpecies, PokemonWithStats } from '@/src/api/pokemon/dto/pokemon';
 import { AppSession } from '@/src/modules/auth/types';
 import { SwipePokemonDto } from '@/src/modules/pokemon/dto/pokemon.dto';
 import { PokemonService } from '@/src/modules/pokemon/pokemon.service';
@@ -46,6 +47,26 @@ export class PokemonController {
     if (pokemonDto.action === 'dislike') {
       return await this.pokemonService.dislike(pokemonData);
     }
+  }
+
+  @Get('/list')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon list' })
+  @ApiQuery({ name: 'limit', type: Number, description: 'pokemon limit (count)', default: 10 })
+  @ApiQuery({ name: 'offset', type: Number, description: 'offset (pagination)', default: 0 })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon list',
+    type: PaginatedListDto<PokemonWithStats>, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'evolutions not found' })
+  async getPokemonList(
+    @Query('limit') limit: number = 10,
+    @Query('offset') offset: number = limit,
+  ) {
+    const list = await this.pokemonService.getPokemonList({ limit, offset });
+
+    return list;
   }
 
   @Get(':id')

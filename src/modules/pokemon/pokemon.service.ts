@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { $Enums } from '@prisma/generated/prisma';
 
+import { PaginatedListDto, PaginationDto } from '@/src/api/pokemon/dto/paginate.dto';
+import { PokemonWithStats } from '@/src/api/pokemon/dto/pokemon';
 import { pokemonApi } from '@/src/api/pokemon/pokemon.api';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 
@@ -305,6 +307,41 @@ export class PokemonService {
       return evolutions.data;
     } catch (e) {
       console.log('error in "getPokemonEvolutions"', e);
+      throw new NotFoundException();
+    }
+  }
+
+  async getPokemonList(params: PaginationDto): Promise<PaginatedListDto<PokemonWithStats>> {
+    try {
+      const { data } = await pokemonApi.getPokemonList(params);
+      const names = data.results.map((poke) => poke.name);
+
+      const settledPokemonResponses = await Promise.allSettled(
+        names.map((name) => pokemonApi.getPokemon(name)),
+      );
+
+      const pokemons = settledPokemonResponses.flatMap((res) =>
+        res.status === 'fulfilled' ? [res.value.data] : [],
+      );
+
+      const swipeStatsList = await Promise.all(
+        pokemons.map((pok) => this.getPokemonSwipeStatistic(pok.id)),
+      );
+
+      const results: PokemonWithStats[] = pokemons.map((pokemon, index) => ({
+        ...pokemon,
+        likes: swipeStatsList[index].likes,
+        dislikes: swipeStatsList[index].disliked,
+      }));
+
+      return {
+        count: data.count,
+        next: data.next,
+        previous: data.previous,
+        results,
+      };
+    } catch (error) {
+      console.error('Error in "getPokemonList":', error);
       throw new NotFoundException();
     }
   }

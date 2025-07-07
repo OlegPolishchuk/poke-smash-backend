@@ -1,9 +1,12 @@
 import { api } from '@/src/api/instance';
 import { Ability } from '@/src/api/pokemon/dto/ability';
 import { EvolutionChain } from '@/src/api/pokemon/dto/evolution';
+import { PaginationDto } from '@/src/api/pokemon/dto/paginate.dto';
 import { Pokemon, PokemonSpecies } from '@/src/api/pokemon/dto/pokemon';
 import { Stat } from '@/src/api/pokemon/dto/stats';
 import { Type } from '@/src/api/pokemon/dto/types';
+import { Name, NamedAPIResource } from '@/src/api/pokemon/dto/utility';
+import { PaginatedList } from '@/src/api/types';
 
 export const pokemonApi = {
   getPokemon(id: number | string) {
@@ -28,5 +31,11 @@ export const pokemonApi = {
 
   getEvolutions(id: number | string) {
     return api.get<EvolutionChain>(`evolution-chain/${id}`);
+  },
+
+  getPokemonList(params: PaginationDto) {
+    return api.get<PaginatedList<NamedAPIResource[]>>('pokemon', {
+      params,
+    });
   },
 };
