@@ -345,4 +345,26 @@ export class PokemonService {
       throw new NotFoundException();
     }
   }
+
+  async getTopTen() {
+    try {
+      const pokemonsStats = await this.prismaService.pokemonStats.findMany({
+        orderBy: { likes: 'desc' },
+        take: 10,
+      });
+
+      const pokemons = await Promise.all(
+        pokemonsStats.map((pokemon) => this.getPokemon(pokemon.pokemon_id)),
+      );
+
+      return pokemons.map((pokemon, index) => ({
+        ...pokemon,
+        likes: pokemonsStats[index].likes,
+        dislikes: pokemonsStats[index].disliked,
+      }));
+    } catch (error) {
+      console.log('Error in "getTopTen" :', error);
+      throw new NotFoundException();
+    }
+  }
 }

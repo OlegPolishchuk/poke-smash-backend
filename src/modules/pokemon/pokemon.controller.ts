@@ -59,12 +59,27 @@ export class PokemonController {
     description: 'Pokemon list',
     type: PaginatedListDto<PokemonWithStats>, // Тип для возврата
   })
-  @ApiResponse({ status: 404, description: 'evolutions not found' })
+  @ApiResponse({ status: 404, description: 'Pokemons not found' })
   async getPokemonList(
     @Query('limit') limit: number = 10,
     @Query('offset') offset: number = limit,
   ) {
     const list = await this.pokemonService.getPokemonList({ limit, offset });
+
+    return list;
+  }
+
+  @Get('/list/top-ten')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get Pokemon top Ten list' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon list',
+    type: PaginatedListDto<PokemonWithStats>, // Тип для возврата
+  })
+  @ApiResponse({ status: 404, description: 'Pokemons not found' })
+  async getPokemonListTopTen() {
+    const list = await this.pokemonService.getTopTen();
 
     return list;
   }
